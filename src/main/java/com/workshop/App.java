@@ -24,7 +24,7 @@ public class App extends Application {
             mainScene = new Scene(scrollPane);
             primaryStage.setScene(mainScene);
             primaryStage.setTitle("Sample JavaFX application");
-            primaryStage.setMaximized(true);
+            primaryStage.setMaximized(false);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
