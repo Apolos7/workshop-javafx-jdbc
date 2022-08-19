@@ -11,30 +11,31 @@ import java.io.IOException;
 
 public class App extends Application {
 
-    private static Scene scene;
+    private static Scene mainScene;
 
     @Override
     public void start(Stage primaryStage) {
         try {
-            ScrollPane scrollPane = loadFXML("main");
+            ScrollPane scrollPane = (ScrollPane) loadFXML("main");
 
             scrollPane.setFitToHeight(true);
             scrollPane.setFitToWidth(true);
 
-            Scene mainScene = new Scene(scrollPane);
+            mainScene = new Scene(scrollPane);
             primaryStage.setScene(mainScene);
             primaryStage.setTitle("Sample JavaFX application");
+            primaryStage.setMaximized(true);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    static void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+    public static Scene getMainScene() {
+        return mainScene;
     }
 
-    private static ScrollPane loadFXML(String fxml) throws IOException {
+    public static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
