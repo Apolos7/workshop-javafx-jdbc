@@ -37,7 +37,7 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void onMenuitemDepartmentAction() {
-        System.out.println("onMenuitemDepartmentAction");
+        loadView("DepartmentList");
     }
 
     @FXML
@@ -47,7 +47,7 @@ public class MainViewController implements Initializable {
 
     private synchronized void loadView(String viewName) {
         try {
-            VBox newVbBox = (VBox) App.loadFXML("About");
+            VBox newVbBox = (VBox) App.loadFXML(viewName);
 
             Scene mainScene = App.getMainScene();
             VBox mainVbox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
