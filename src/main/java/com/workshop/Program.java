@@ -2,14 +2,13 @@ package com.workshop;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class App extends Application {
+public class Program extends Application {
 
     private static Scene mainScene;
 
@@ -36,7 +35,7 @@ public class App extends Application {
     }
 
     private static ScrollPane loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Program.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 

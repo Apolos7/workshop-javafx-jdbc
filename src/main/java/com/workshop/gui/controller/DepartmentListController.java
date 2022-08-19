@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import com.workshop.App;
+import com.workshop.Program;
 import com.workshop.model.entities.Department;
 import com.workshop.model.services.DepartmentService;
 
@@ -64,7 +64,7 @@ public class DepartmentListController implements Initializable {
         tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        Stage stage = (Stage) App.getMainScene().getWindow();
+        Stage stage = (Stage) Program.getMainScene().getWindow();
 
         tableViewDepartments.prefHeightProperty().bind(stage.heightProperty());
     }

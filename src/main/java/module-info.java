@@ -1,6 +1,7 @@
 module com.workshop {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
     opens com.workshop to javafx.fxml;
     opens com.workshop.gui.controller to javafx.fxml;
@@ -9,4 +10,5 @@ module com.workshop {
     exports com.workshop;
     exports com.workshop.model.services;
     exports com.workshop.gui.controller to javafx.fxml;
+    exports com.workshop.model.entities;
 }

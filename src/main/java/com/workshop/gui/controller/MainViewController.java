@@ -1,19 +1,17 @@
 package com.workshop.gui.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
-import com.workshop.App;
+import com.workshop.Program;
 import com.workshop.gui.util.Alerts;
 import com.workshop.model.services.DepartmentService;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.fxml.LoadException;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
@@ -52,11 +50,11 @@ public class MainViewController implements Initializable {
 
     private synchronized <T> void loadView(String viewName, Consumer<T> initializationFunction) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(viewName + ".fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Program.class.getResource(viewName + ".fxml"));
 
             VBox newVbBox = (VBox) fxmlLoader.load();
 
-            Scene mainScene = App.getMainScene();
+            Scene mainScene = Program.getMainScene();
             VBox mainVbox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
 
             Node mainMenu = mainVbox.getChildren().get(0);
