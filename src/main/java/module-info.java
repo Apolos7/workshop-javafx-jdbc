@@ -4,6 +4,9 @@ module com.workshop {
 
     opens com.workshop to javafx.fxml;
     opens com.workshop.gui.controller to javafx.fxml;
+    opens com.workshop.model.entities to javafx.base;
+
     exports com.workshop;
+    exports com.workshop.model.services;
     exports com.workshop.gui.controller to javafx.fxml;
 }
