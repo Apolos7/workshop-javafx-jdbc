@@ -16,7 +16,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            ScrollPane scrollPane = (ScrollPane) loadFXML("main");
+            ScrollPane scrollPane = loadFXML("main");
 
             scrollPane.setFitToHeight(true);
             scrollPane.setFitToWidth(true);
@@ -35,7 +35,7 @@ public class App extends Application {
         return mainScene;
     }
 
-    public static Parent loadFXML(String fxml) throws IOException {
+    private static ScrollPane loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }

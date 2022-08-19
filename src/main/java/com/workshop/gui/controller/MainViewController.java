@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 import com.workshop.App;
 import com.workshop.gui.util.Alerts;
+import com.workshop.model.services.DepartmentService;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,17 +39,22 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void onMenuitemDepartmentAction() {
-        loadView("DepartmentList");
+        loadView("DepartmentList", (DepartmentListController controller) -> {
+            controller.setDepartmentService(new DepartmentService());
+            controller.updateTableView();
+        });
     }
 
     @FXML
     public void onMenuitemAboutAction() {
-        loadView("About");
+        loadView("About", x -> {});
     }
 
-    private synchronized void loadView(String viewName) {
+    private synchronized <T> void loadView(String viewName, Consumer<T> initializationFunction) {
         try {
-            VBox newVbBox = (VBox) App.loadFXML(viewName);
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(viewName + ".fxml"));
+
+            VBox newVbBox = (VBox) fxmlLoader.load();
 
             Scene mainScene = App.getMainScene();
             VBox mainVbox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
@@ -56,6 +63,9 @@ public class MainViewController implements Initializable {
             mainVbox.getChildren().clear();
             mainVbox.getChildren().add(mainMenu);
             mainVbox.getChildren().addAll(newVbBox.getChildren());
+
+            T controller = fxmlLoader.getController();
+            initializationFunction.accept(controller);
 
         } catch (IOException e) {
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
