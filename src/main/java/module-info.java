@@ -2,6 +2,8 @@ module com.workshop {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires transitive javafx.base;
+    requires transitive javafx.graphics;
 
     opens com.workshop to javafx.fxml;
     opens com.workshop.gui.controller to javafx.fxml;
