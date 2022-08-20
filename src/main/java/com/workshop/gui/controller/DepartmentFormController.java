@@ -3,7 +3,9 @@ package com.workshop.gui.controller;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import com.workshop.db.DbException;
 import com.workshop.gui.listeners.DataChangeListener;
@@ -11,6 +13,7 @@ import com.workshop.gui.util.Alerts;
 import com.workshop.gui.util.Constraints;
 import com.workshop.gui.util.Utils;
 import com.workshop.model.entities.Department;
+import com.workshop.model.exceptions.ValidationException;
 import com.workshop.model.services.DepartmentService;
 
 import javafx.event.ActionEvent;
@@ -62,8 +65,9 @@ public class DepartmentFormController implements Initializable {
             Utils.currentStage(event).close();
         } catch (DbException e) {
             Alerts.showAlert("Error saving department", null, e.getMessage(), AlertType.ERROR);
+        } catch (ValidationException e) {
+            setErrorsMessages(e.getErros());
         }
-
     }
 
     @FXML
@@ -97,11 +101,32 @@ public class DepartmentFormController implements Initializable {
         Constraints.setTextFieldMaxLength(txtName, 30);
     }
 
-    private Department getFormData() {
+    private Department getFormData() throws ValidationException {
         Department department = new Department();
+
+        ValidationException exception = new ValidationException("Validation Error");
+
         department.setId(Utils.tryParseToInt(txtId.getText()));
+
+        if (txtName.getText() == null || txtName.getText().trim().equals("")) {
+            exception.addError("name", "field can't be empty");
+        }
         department.setName(txtName.getText());
+
+        if (exception.getErros().size() > 0) {
+            throw exception;
+        }
+
         return department;
+    }
+
+    private void setErrorsMessages(Map<String, String> erros) {
+        Set<String> fields = erros.keySet();
+
+        if (fields.contains("name")) {
+            labelErrorName.setText(erros.get("name"));
+        }
+
     }
 
     public void subscribeDataChangeListeners(DataChangeListener dataChangeListener) {

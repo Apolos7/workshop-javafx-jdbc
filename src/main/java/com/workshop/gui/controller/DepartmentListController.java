@@ -12,6 +12,7 @@ import com.workshop.gui.util.Utils;
 import com.workshop.model.entities.Department;
 import com.workshop.model.services.DepartmentService;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,6 +21,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
@@ -42,13 +44,16 @@ public class DepartmentListController implements Initializable, DataChangeListen
     private TableColumn<Department, String> tableColumnName;
 
     @FXML
+    private TableColumn<Department, Department> tableColumnEDIT;
+
+    @FXML
     private Button btNew;
 
     private ObservableList<Department> obsList;
 
     public void onBtNewAction(ActionEvent event) {
         Department department = new Department();
-        createDialogForm(department ,Utils.currentStage(event), "DepartmentForm");
+        createDialogForm(department, Utils.currentStage(event), "DepartmentForm");
     }
 
     public void setDepartmentService(DepartmentService service) {
@@ -69,6 +74,8 @@ public class DepartmentListController implements Initializable, DataChangeListen
         obsList = FXCollections.observableArrayList(list);
 
         tableViewDepartments.setItems(obsList);
+
+        initEditButtons();
     }
 
     private void initializeNodes() {
@@ -78,6 +85,24 @@ public class DepartmentListController implements Initializable, DataChangeListen
         Stage stage = (Stage) Program.getMainScene().getWindow();
 
         tableViewDepartments.prefHeightProperty().bind(stage.heightProperty());
+    }
+
+    private void initEditButtons() {
+        tableColumnEDIT.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue()));
+        tableColumnEDIT.setCellFactory(param -> new TableCell<Department, Department>() {
+            private final Button button = new Button("edit");
+
+            @Override
+            protected void updateItem(Department obj, boolean empty) {
+                super.updateItem(obj, empty);
+                if (obj == null) {
+                    setGraphic(null);
+                    return;
+                }
+                setGraphic(button);
+                button.setOnAction(event -> createDialogForm(obj, Utils.currentStage(event), "DepartmentForm"));
+            }
+        });
     }
 
     private void createDialogForm(Department department, Stage parentStage, String viewName) {
@@ -99,8 +124,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.showAndWait();
 
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
         }
     }
@@ -109,5 +133,5 @@ public class DepartmentListController implements Initializable, DataChangeListen
     public void onDataChange() {
         updateTableView();
     }
-    
+
 }
