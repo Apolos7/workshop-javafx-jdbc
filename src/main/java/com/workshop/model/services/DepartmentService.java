@@ -15,4 +15,12 @@ public class DepartmentService {
         return list;
     }
 
+    public void saveOrUpdate(Department department) {
+        if (department.getId() != null) {
+            dao.update(department);
+        } else {
+            dao.insert(department);
+        }
+    }
+
 }
