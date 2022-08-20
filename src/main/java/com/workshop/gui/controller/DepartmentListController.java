@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import com.workshop.Program;
+import com.workshop.gui.listeners.DataChangeListener;
 import com.workshop.gui.util.Alerts;
 import com.workshop.gui.util.Utils;
 import com.workshop.model.entities.Department;
@@ -27,7 +28,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class DepartmentListController implements Initializable {
+public class DepartmentListController implements Initializable, DataChangeListener {
 
     private DepartmentService service;
 
@@ -48,7 +49,6 @@ public class DepartmentListController implements Initializable {
     public void onBtNewAction(ActionEvent event) {
         Department department = new Department();
         createDialogForm(department ,Utils.currentStage(event), "DepartmentForm");
-        updateTableView();
     }
 
     public void setDepartmentService(DepartmentService service) {
@@ -88,6 +88,7 @@ public class DepartmentListController implements Initializable {
             DepartmentFormController controller = fxmlLoader.getController();
             controller.setDepartment(department);
             controller.setDepartmentService(new DepartmentService());
+            controller.subscribeDataChangeListeners(this);
             controller.UpdateFormData();
 
             Stage dialogStage = new Stage();
@@ -102,6 +103,11 @@ public class DepartmentListController implements Initializable {
         catch (IOException e) {
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
         }
+    }
+
+    @Override
+    public void onDataChange() {
+        updateTableView();
     }
     
 }

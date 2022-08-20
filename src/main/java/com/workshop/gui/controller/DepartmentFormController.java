@@ -1,10 +1,12 @@
 package com.workshop.gui.controller;
 
-import java.io.Serial;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.workshop.db.DbException;
+import com.workshop.gui.listeners.DataChangeListener;
 import com.workshop.gui.util.Alerts;
 import com.workshop.gui.util.Constraints;
 import com.workshop.gui.util.Utils;
@@ -24,6 +26,8 @@ public class DepartmentFormController implements Initializable {
     private Department entity;
 
     private DepartmentService service;
+
+    private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 
     @FXML
     private TextField txtId;
@@ -54,6 +58,7 @@ public class DepartmentFormController implements Initializable {
         try {
             entity = getFormData();
             service.saveOrUpdate(entity);
+            notifyDataChangeListeners();
             Utils.currentStage(event).close();
         } catch (DbException e) {
             Alerts.showAlert("Error saving department", null, e.getMessage(), AlertType.ERROR);
@@ -97,6 +102,16 @@ public class DepartmentFormController implements Initializable {
         department.setId(Utils.tryParseToInt(txtId.getText()));
         department.setName(txtName.getText());
         return department;
+    }
+
+    public void subscribeDataChangeListeners(DataChangeListener dataChangeListener) {
+        dataChangeListeners.add(dataChangeListener);
+    }
+
+    private void notifyDataChangeListeners() {
+        dataChangeListeners.forEach(listener -> {
+            listener.onDataChange();
+        });
     }
 
 }

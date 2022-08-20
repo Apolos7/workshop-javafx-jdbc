@@ -11,6 +11,7 @@ module com.workshop {
 
     exports com.workshop;
     exports com.workshop.model.services;
-    exports com.workshop.gui.controller to javafx.fxml;
+    exports com.workshop.gui.controller;
     exports com.workshop.model.entities;
+    exports com.workshop.gui.listeners;
 }
