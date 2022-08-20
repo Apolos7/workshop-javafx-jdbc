@@ -1,5 +1,6 @@
 package com.workshop.gui.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -8,6 +9,7 @@ import java.util.function.Consumer;
 import com.workshop.Program;
 import com.workshop.gui.util.Alerts;
 import com.workshop.model.services.DepartmentService;
+import com.workshop.model.services.SellerService;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,7 +34,10 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void onMenuitemSellerAction() {
-        System.out.println("onMenuitemSellerAction");
+        loadView("SellerList", (SellerListController controller) -> {
+            controller.setSellerService(new SellerService());
+            controller.updateTableView();
+        });
     }
 
     @FXML
@@ -67,6 +72,7 @@ public class MainViewController implements Initializable {
 
         } catch (IOException e) {
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
+            e.printStackTrace();
         }
     }
 
