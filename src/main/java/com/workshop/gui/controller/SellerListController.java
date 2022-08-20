@@ -54,7 +54,7 @@ public class SellerListController implements Initializable, DataChangeListener {
     private TableColumn<Seller, Date> tableColumnBirthDate;
 
     @FXML
-    private TableColumn<Seller, Double> tableColumnSalary;
+    private TableColumn<Seller, Double> tableColumnBaseSalary;
 
     @FXML
     private TableColumn<Seller, Seller> tableColumnEDIT;
@@ -100,7 +100,10 @@ public class SellerListController implements Initializable, DataChangeListener {
         tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         tableColumnBirthDate.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
-        tableColumnSalary.setCellValueFactory(new PropertyValueFactory<>("baseSalary"));
+        Utils.formatTableColumnDate(tableColumnBirthDate, "dd/MM/yyyy");
+
+        tableColumnBaseSalary.setCellValueFactory(new PropertyValueFactory<>("baseSalary"));
+        Utils.formatTableColumnDouble(tableColumnBaseSalary, 2);
 
         Stage stage = (Stage) Program.getMainScene().getWindow();
 
