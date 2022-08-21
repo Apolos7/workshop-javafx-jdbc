@@ -13,6 +13,7 @@ import com.workshop.gui.listeners.DataChangeListener;
 import com.workshop.gui.util.Alerts;
 import com.workshop.gui.util.Utils;
 import com.workshop.model.entities.Seller;
+import com.workshop.model.services.DepartmentService;
 import com.workshop.model.services.SellerService;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -174,7 +175,8 @@ public class SellerListController implements Initializable, DataChangeListener {
 
             SellerFormController controller = fxmlLoader.getController();
             controller.setSeller(Seller);
-            controller.setSellerService(new SellerService());
+            controller.setServices(new SellerService(), new DepartmentService());
+            controller.loadAssociatedObjects();
             controller.subscribeDataChangeListeners(this);
             controller.UpdateFormData();
 
@@ -187,6 +189,7 @@ public class SellerListController implements Initializable, DataChangeListener {
             dialogStage.showAndWait();
 
         } catch (IOException e) {
+            e.printStackTrace();
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
         }
     }
