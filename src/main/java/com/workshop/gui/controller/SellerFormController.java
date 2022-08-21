@@ -1,8 +1,11 @@
 package com.workshop.gui.controller;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -99,6 +102,14 @@ public class SellerFormController implements Initializable {
         }
         txtId.setText(String.valueOf(entity.getId()));
         txtName.setText(entity.getName());
+        txtEmail.setText(entity.getEmail());
+        Locale.setDefault(Locale.US);
+        txtBaseSalary.setText(String.format("%.2f", entity.getBaseSalary()));
+        if (entity.getBirthDate() != null) {
+            datePickerBirthDate
+                    .setValue(LocalDate.ofInstant(entity.getBirthDate().toInstant(), ZoneId.systemDefault()));
+        }
+
     }
 
     @Override
@@ -108,7 +119,10 @@ public class SellerFormController implements Initializable {
 
     private void initializeNodes() {
         Constraints.setTextFieldInteger(txtId);
-        Constraints.setTextFieldMaxLength(txtName, 30);
+        Constraints.setTextFieldMaxLength(txtName, 70);
+        Constraints.setTextFieldDouble(txtBaseSalary);
+        Constraints.setTextFieldMaxLength(txtEmail, 70);
+        Utils.formatDatePicker(datePickerBirthDate, "dd/MM/yyyy");
     }
 
     private Seller getFormData() throws ValidationException {

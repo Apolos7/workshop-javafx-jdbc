@@ -41,6 +41,15 @@
                <GridPane.margin>
                   <Insets left="10.0" />
                </GridPane.margin></Label>
+            <Label fx:id="labelErrorEmail" textFill="#a10000" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label fx:id="labelError" textFill="#a10000" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="labelErrorBaseSalary" textFill="#a10000" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label text="Email" GridPane.rowIndex="2" />
+            <Label text="BirthDate" GridPane.rowIndex="3" />
+            <Label text="Base Salary" GridPane.rowIndex="4" />
+            <TextField fx:id="txtBaseSalary" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="txtEmail" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <DatePicker fx:id="datePickerBirthDate" prefHeight="25.0" prefWidth="195.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <HBox alignment="CENTER" prefHeight="32.0" prefWidth="178.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                <children>
                   <Button fx:id="btSave" mnemonicParsing="false" onAction="#onBtSaveAction" text="Save">
@@ -55,12 +64,6 @@
                   </Button>
                </children>
             </HBox>
-            <Label text="Email" GridPane.rowIndex="2" />
-            <Label text="BirthDate" GridPane.rowIndex="3" />
-            <Label text="Base Salary" GridPane.rowIndex="4" />
-            <TextField fx:id="txtBaseSalary" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-            <TextField fx:id="txtEmail" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <DatePicker fx:id="datePickerBirthDate" prefHeight="25.0" prefWidth="195.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
    </children>
